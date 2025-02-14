@@ -6,7 +6,7 @@ on:
       - "**"
 
 env:
-  CONTAINER_REPOSITORY: quay.io/mortierdaan # PUT YOUR OWN USERNAME HERE test
+  CONTAINER_REPOSITORY: quay.io/denzell_boelens # PUT YOUR OWN USERNAME HERE test
   CONTAINER_IMAGE: alm-workshop
   GOLANG_VERSION: 1.23
 

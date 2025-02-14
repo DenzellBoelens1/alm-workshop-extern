@@ -1,7 +1,7 @@
 name: Golang Docker Build
 
 on: # LET THE PIPELINE TRIGGER ON A PUSH TO ALL BRANCHES
-
+  push:
 env:
   CONTAINER_REPOSITORY: quay.io/denzell_boelens # PUT YOUR OWN USERNAME HERE
   CONTAINER_IMAGE: alm-workshop

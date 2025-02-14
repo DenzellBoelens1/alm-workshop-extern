@@ -1,6 +1,6 @@
 name: Golang Docker Build
 
-# Laat de pipeline triggeren bij elke push
+# Laat de pipeline triggeren bij elke push test
 on:
   push:
 

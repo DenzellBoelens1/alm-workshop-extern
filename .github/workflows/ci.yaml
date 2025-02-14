@@ -1,9 +1,11 @@
 name: Golang Docker Build
 
-on: # LET THE PIPELINE TRIGGER ON A PUSH TO ALL BRANCHES testje
+# Laat de pipeline triggeren bij elke push
+on:
   push:
+
 env:
-  CONTAINER_REPOSITORY: quay.io/denzell_boelens # PUT YOUR OWN USERNAME HERE
+  CONTAINER_REPOSITORY: quay.io/denzell_boelens # Vervang met je eigen Quay.io username
   CONTAINER_IMAGE: alm-workshop
   GOLANG_VERSION: 1.23
 
@@ -13,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Quay.io login
+      # 🔹 Login to Quay.io via GitHub Secrets
       - name: Login to Quay.io
         uses: docker/login-action@v3
         with:
@@ -21,16 +23,24 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_PASSWORD }}
 
+      # 🔹 Metadata genereren voor Docker image
       - name: Extract metadata (tags, labels) for Docker
         uses: docker/metadata-action@v4
         id: meta
         with:
           images: quay.io/denzell_boelens/alm-workshop
 
+      # 🔹 Build en push Docker image
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            quay.io/denzell_boelens/alm-workshop:latest  # Extra "latest" tag toevoegen
+
+      # 🔹 Logout for security
+      - name: Logout from Quay.io
+        run: docker logout quay.io
